@@ -1,0 +1,26 @@
+[
+  {
+    "id": "tecnologia",
+    "name": "Tecnologia",
+    "description": "Celulares, notebooks e acessórios",
+    "accentColor": "#ff5db1"
+  },
+  {
+    "id": "moda",
+    "name": "Moda",
+    "description": "Roupas, calçados e bolsas",
+    "accentColor": "#b36bff"
+  },
+  {
+    "id": "casa",
+    "name": "Casa & Decor",
+    "description": "Móveis, cozinha e organização",
+    "accentColor": "#ff7ad1"
+  },
+  {
+    "id": "beleza",
+    "name": "Beleza",
+    "description": "Skincare, maquiagem e perfumes",
+    "accentColor": "#9c5cff"
+  }
+]
