@@ -1,64 +1,57 @@
-# Mix Catálogo Digital - Documentação Completa
-
-## 📋 Visão Geral
-
 **Mix Catálogo Digital** é uma aplicação web desenvolvida em **React + Vite** que oferece um catálogo digital interativo para lojas com grande variedade de produtos. O aplicativo permite navegação por categorias, busca de produtos, e salvamento de favoritos localmente (sem backend).
 
 ### Características Principais
-- ✅ Tela inicial com apresentação e CTA
-- ✅ Listagem de categorias em cards interativos
-- ✅ Catálogo de produtos por categoria
-- ✅ Busca por nome de produto em tempo real
-- ✅ Sistema de favoritos persistido no `localStorage`
-- ✅ Design limpo com paleta rosa/roxo
-- ✅ Navegação por rotas (React Router)
-- ✅ Dados mockados em JSON (sem dependência de API)
+- Tela inicial com apresentação e CTA
+- Listagem de categorias em cards interativos
+- Catálogo de produtos por categoria
+- Busca por nome de produto em tempo real
+- Sistema de favoritos persistido no `localStorage`
+- Design limpo com paleta rosa/roxo
+- Navegação por rotas (React Router)
+- Dados mockados em JSON (sem dependência de API)
 
----
+## Estrutura do Projeto
 
-## 🏗️ Estrutura do Projeto
-
-```
-mix-catalogo-digital/
+mix-catalogo/
 │
-├── public/
-│   └── logo.png                 # Logomarca da loja (substitua pela sua)
+├── backend/
+│   ├── config/
+│   │   └── ConexaoBD.js        # Configuração da conexão com o banco de dados
+│   ├── node_modules/           # Dependências do backend
+│   ├── src/
+│   │   ├── controllers/        # Controladores da aplicação
+│   │   ├── models/             # Modelos de dados
+│   │   └── routes/             # Definição das rotas
+|   |            
+│   ├── .env                    # Variáveis de ambiente
+│   ├── package-lock.json       # Arquivo de bloqueio de dependências
+│   ├── package.json            # Arquivo de dependências do backend
+│   └── server.js               # Arquivo de configuração do servidor
 │
-├── src/
-│   ├── components/              # Componentes reutilizáveis
-│   │   ├── Header.jsx           # Cabeçalho com botão voltar e logo
-│   │   ├── CategoryCard.jsx     # Card individual de categoria
-│   │   ├── ProductCard.jsx      # Card individual de produto
-│   │   └── SearchBar.jsx        # Barra de busca
-│   │
-│   ├── pages/                   # Páginas/telas da aplicação
-│   │   ├── HomePage.jsx         # Tela inicial com hero section
-│   │   ├── CategoriesPage.jsx   # Tela de listagem de categorias
-│   │   └── ProductsPage.jsx     # Tela de produtos de uma categoria
-│   │
-│   ├── data/                    # Dados mockados
-│   │   ├── categories.json      # Lista de categorias
-│   │   └── products.json        # Lista de produtos
-│   │
-│   ├── hooks/                   # Custom hooks React
-│   │   └── useFavorites.js      # Hook para gerenciar favoritos
-│   │
-│   ├── styles/
-│   │   └── global.css           # Estilos globais (tema rosa/roxo)
-│   │
-│   ├── App.jsx                  # Componente principal com rotas
-│   └── main.jsx                 # Entrada da aplicação
+├── frontend/
+│   ├── node_modules/           # Dependências do frontend
+│   ├── public/
+│   │   └── logo.png            # Logomarca da aplicação
+│   ├── src/
+│   │   ├── components/         # Componentes reutilizáveis
+│   │   ├── data/               # Dados da aplicação
+│   │   ├── hooks/              # Hooks personalizados
+│   │   ├── pages/              # Páginas da aplicação
+│   │   ├── styles/             # Arquivos de estilo
+│   │   ├── App.jsx             # Componente App principal
+│   │   └── main.jsx            # Ponto de entrada do frontend
+│   │    
+│   ├── index.html              # Arquivo HTML principal
+|   ├── package-lock.json       # Arquivo de bloqueio de dependências do frontend
+│   ├── package.json            # Arquivo de dependências do frontend
+│   └── vite.config.js          # Configuração do Vite
 │
-├── index.html                   # HTML raiz
-├── package.json                 # Dependências e scripts
-├── vite.config.js              # Configuração do Vite
-├── .eslintrc.json              # Configuração do ESLint
-└── README.md                    # Guia rápido de setup
-```
+├── .gitignore                  # Arquivo para ignorar arquivos no git
+├── .eslintrc.json
+└── DOCUMENTACAO.md             # Documentação do projeto
 
----
 
-## 🔧 Configuração Inicial
+## Configuração Inicial
 
 ### Pré-requisitos
 - Node.js 16+ instalado
@@ -78,11 +71,8 @@ npm run build
 
 # Preview do build
 npm run preview
-```
 
 O servidor rodará em `http://localhost:5173`
-
----
 
 ## 📁 Descrição dos Arquivos Principais
 
@@ -357,19 +347,3 @@ npm run lint       # Verifica erros com ESLint
 - [ ] Autenticação de usuário
 - [ ] PWA (Progressive Web App)
 - [ ] Temas personalizáveis
-
----
-
-## 📞 Suporte
-
-Para dúvidas ou problemas, verifique:
-1. Console do navegador (F12) para erros
-2. Estrutura das pastas matches a acima
-3. JSON está formatado corretamente
-4. Node.js e npm estão atualizados
-
----
-
-**Versão:** 0.1.0  
-**Data:** Dezembro 2025  
-**Autor:** Seu Nome
