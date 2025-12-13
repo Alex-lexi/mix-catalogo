@@ -1,18 +1,30 @@
 const Carrinho = require('../models/CarrinhoModel');
 
 class CarrinhoController {
-    // POST /carrinho - Adicionar item
     static async adicionarItem(req, res) {
         try {
             const { usuario_id, produto_id, quantidade } = req.body;
-            const item = await Carrinho.adicionarItem(usuario_id, produto_id, quantidade || 1);
+
+            if (!usuario_id || !produto_id) {
+                return res.status(400).json({ erro: 'Usuário e produto são obrigatórios' });
+            }
+
+            if (quantidade !== undefined && quantidade <= 0) {
+                return res.status(400).json({ erro: 'Quantidade inválida' });
+            }
+
+            const item = await Carrinho.adicionarItem(
+                usuario_id,
+                produto_id,
+                quantidade || 1
+            );
+
             res.status(201).json(item);
         } catch (error) {
             res.status(500).json({ erro: error.message });
         }
     }
 
-    // GET /carrinho/:usuario_id - Listar carrinho do usuário
     static async listarPorUsuario(req, res) {
         try {
             const { usuario_id } = req.params;
@@ -23,7 +35,6 @@ class CarrinhoController {
         }
     }
 
-    // GET /carrinho/:usuario_id/total - Total do carrinho
     static async calcularTotal(req, res) {
         try {
             const { usuario_id } = req.params;
@@ -34,15 +45,19 @@ class CarrinhoController {
         }
     }
 
-    // PUT /carrinho/:id - Atualizar quantidade
     static async atualizarQuantidade(req, res) {
         try {
             const { id } = req.params;
             const { quantidade } = req.body;
+
+            if (!quantidade || quantidade <= 0) {
+                return res.status(400).json({ erro: 'Quantidade inválida' });
+            }
+
             const item = await Carrinho.atualizarQuantidade(id, quantidade);
 
             if (!item) {
-                return res.status(404).json({ erro: "Item não encontrado" });
+                return res.status(404).json({ erro: 'Item não encontrado' });
             }
 
             res.json(item);
@@ -51,7 +66,6 @@ class CarrinhoController {
         }
     }
 
-    // DELETE /carrinho/:id - Remover item
     static async removerItem(req, res) {
         try {
             const { id } = req.params;
@@ -62,7 +76,6 @@ class CarrinhoController {
         }
     }
 
-    // DELETE /carrinho/limpar/:usuario_id - Limpar carrinho
     static async limparCarrinho(req, res) {
         try {
             const { usuario_id } = req.params;

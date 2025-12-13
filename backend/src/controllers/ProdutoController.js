@@ -1,18 +1,36 @@
 const Produto = require('../models/ProdutoModel');
 
 class ProdutoController {
-    // POST /produtos - Criar produto
     static async criar(req, res) {
         try {
             const { nome, preco, descricao, categoria_id, imagem } = req.body;
-            const produto = await Produto.criar(nome, preco, descricao, categoria_id, imagem);
+
+            if (!nome || nome.trim() === '') {
+                return res.status(400).json({ erro: 'Nome do produto é obrigatório' });
+            }
+
+            if (!preco || preco <= 0) {
+                return res.status(400).json({ erro: 'Preço inválido' });
+            }
+
+            if (!categoria_id) {
+                return res.status(400).json({ erro: 'Categoria é obrigatória' });
+            }
+
+            const produto = await Produto.criar(
+                nome,
+                preco,
+                descricao || '',
+                categoria_id,
+                imagem || null
+            );
+
             res.status(201).json(produto);
         } catch (error) {
             res.status(500).json({ erro: error.message });
         }
     }
 
-    // GET /produtos - Listar todos
     static async listar(req, res) {
         try {
             const produtos = await Produto.listar();
@@ -22,7 +40,6 @@ class ProdutoController {
         }
     }
 
-    // GET /produtos/:id - Buscar por ID
     static async buscarPorId(req, res) {
         try {
             const { id } = req.params;
@@ -38,7 +55,6 @@ class ProdutoController {
         }
     }
 
-    // GET /produtos/categoria/:categoria_id - Buscar por categoria
     static async buscarPorCategoria(req, res) {
         try {
             const { categoria_id } = req.params;
@@ -49,15 +65,30 @@ class ProdutoController {
         }
     }
 
-    // PUT /produtos/:id - Atualizar
     static async atualizar(req, res) {
         try {
             const { id } = req.params;
             const { nome, preco, descricao, categoria_id, imagem } = req.body;
-            const produto = await Produto.atualizar(id, nome, preco, descricao, categoria_id, imagem);
-            
+
+            if (!nome || nome.trim() === '') {
+                return res.status(400).json({ erro: 'Nome do produto é obrigatório' });
+            }
+
+            if (!preco || preco <= 0) {
+                return res.status(400).json({ erro: 'Preço inválido' });
+            }
+
+            const produto = await Produto.atualizar(
+                id,
+                nome,
+                preco,
+                descricao || '',
+                categoria_id,
+                imagem || null
+            );
+
             if (!produto) {
-                return res.status(404).json({ erro: "Produto não encontrado" });
+                return res.status(404).json({ erro: 'Produto não encontrado' });
             }
 
             res.json(produto);
@@ -66,7 +97,6 @@ class ProdutoController {
         }
     }
 
-    // DELETE /produtos/:id - Deletar
     static async deletar(req, res) {
         try {
             const { id } = req.params;

@@ -1,15 +1,25 @@
 const Usuario = require('../models/UsuarioModel');
 
 class UsuarioController {
-    // POST /usuarios - Criar usuário
     static async criar(req, res) {
         try {
             const { nome, email, senha } = req.body;
-            
-            // Verifica se email já existe
+
+            if (!nome || nome.trim() === '') {
+                return res.status(400).json({ erro: 'Nome é obrigatório' });
+            }
+
+            if (!email || email.trim() === '') {
+                return res.status(400).json({ erro: 'Email é obrigatório' });
+            }
+
+            if (!senha) {
+                return res.status(400).json({ erro: 'Senha é obrigatória' });
+            }
+
             const existente = await Usuario.buscarPorEmail(email);
             if (existente) {
-                return res.status(400).json({ erro: "Email já cadastrado" });
+                return res.status(400).json({ erro: 'Email já cadastrado' });
             }
 
             const usuario = await Usuario.criar(nome, email, senha);
@@ -19,7 +29,6 @@ class UsuarioController {
         }
     }
 
-    // GET /usuarios - Listar todos
     static async listar(req, res) {
         try {
             const usuarios = await Usuario.listar();
@@ -29,7 +38,6 @@ class UsuarioController {
         }
     }
 
-    // GET /usuarios/:id - Buscar por ID
     static async buscarPorId(req, res) {
         try {
             const { id } = req.params;
@@ -45,7 +53,6 @@ class UsuarioController {
         }
     }
 
-    // PUT /usuarios/:id - Atualizar
     static async atualizar(req, res) {
         try {
             const { id } = req.params;
@@ -62,7 +69,6 @@ class UsuarioController {
         }
     }
 
-    // DELETE /usuarios/:id - Deletar
     static async deletar(req, res) {
         try {
             const { id } = req.params;

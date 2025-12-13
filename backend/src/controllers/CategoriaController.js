@@ -4,6 +4,11 @@ class CategoriaController {
     static async criar(req, res) {
         try {
             const { nome } = req.body;
+
+            if (!nome || nome.trim() === '') {
+                return res.status(400).json({ erro: 'Nome da categoria é obrigatório' });
+            }
+
             const categoria = await Categoria.criar(nome);
             res.status(201).json(categoria);
         } catch (error) {
@@ -40,7 +45,16 @@ class CategoriaController {
             const { id } = req.params;
             const { nome } = req.body;
 
+            if (!nome || nome.trim() === '') {
+                return res.status(400).json({ erro: 'Nome da categoria é obrigatório' });
+            }
+
             const categoria = await Categoria.atualizar(id, nome);
+
+            if (!categoria) {
+                return res.status(404).json({ erro: 'Categoria não encontrada' });
+            }
+
             res.json(categoria);
         } catch (error) {
             res.status(500).json({ erro: error.message });
