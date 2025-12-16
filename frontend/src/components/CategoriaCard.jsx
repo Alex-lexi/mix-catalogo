@@ -1,6 +1,6 @@
-import '../styles/Categoria.css';
+import '../styles/CategoriaCard.css';
 
-export default function CartaoCategoria({ categoria, aoSelecionarCategoria }) {
+export default function CategoriaCard({ categoria, aoSelecionarCategoria }) {
   return (
     <button
       className="card category-card"
@@ -11,7 +11,6 @@ export default function CartaoCategoria({ categoria, aoSelecionarCategoria }) {
         style={{ background: categoria.corDestaque }}>
         {categoria.nome.slice(0, 1)}
       </div>
-
       <div>
         <h3>{categoria.nome}</h3>
         <p>{categoria.descricao}</p>

@@ -1,4 +1,4 @@
-import CartaoCategoria from '../components/CartaoCategoria.jsx';
+import CategoriaCard from '../components/CategoriaCard.jsx';
 import Cabecalho from '../components/Cabecalho.jsx';
 
 export default function PaginaCategorias({ categorias, aoSelecionarCategoria, aoVoltar }) {
@@ -12,7 +12,7 @@ export default function PaginaCategorias({ categorias, aoSelecionarCategoria, ao
 
       <div className="grid">
         {categorias.map((categoria) => (
-          <CartaoCategoria
+          <CategoriaCard
             key={categoria.id}
             categoria={categoria}
             aoSelecionarCategoria={aoSelecionarCategoria}

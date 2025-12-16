@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Cabecalho from '../components/Cabecalho.jsx';
-import CartaoProduto from '../components/CartaoProduto.jsx';
+import ProdutoCard from '../components/ProdutoCard.jsx';
 import BarraBusca from '../components/BarraBusca.jsx';
 
 export default function PaginaProdutos({
@@ -47,7 +47,7 @@ export default function PaginaProdutos({
       ) : (
         <div className="grid grid-products">
           {produtosFiltrados.map((produto) => (
-            <CartaoProduto
+            <ProdutoCard
               key={produto.id}
               produto={produto}
               ehFavorito={favoritos.includes(produto.id)}

@@ -1,6 +1,6 @@
-import '../styles/Produto.css';
+import '../styles/ProdutoCard.css';
 
-export default function CartaoProduto({
+export default function ProdutoCard({
   produto,
   ehFavorito,
   aoAlternarFavorito,
@@ -10,14 +10,12 @@ export default function CartaoProduto({
       <div className="product-card__image">
         <img src={produto.imagem} alt={produto.nome} />
       </div>
-
       <div className="product-card__body">
         <div>
           <p className="eyebrow">{produto.marca}</p>
           <h3>{produto.nome}</h3>
           <p className="price">{produto.preco}</p>
         </div>
-
         <button
           className={`favorite-button ${ehFavorito ? 'is-active' : ''}`}
           onClick={() => aoAlternarFavorito(produto.id)}
