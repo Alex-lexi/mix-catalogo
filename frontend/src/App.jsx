@@ -1,88 +1,88 @@
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import HomePage from './pages/HomePage.jsx';
-import CategoriesPage from './pages/CategoriesPage.jsx';
-import ProductsPage from './pages/ProductsPage.jsx';
-import useFavorites from './hooks/useFavorites.js';
+import PaginaInicial from './pages/PaginaInicial.jsx';
+import PaginaCategorias from './pages/PaginaCategorias.jsx';
+import PaginaProdutos from './pages/PaginaProdutos.jsx';
+import useFavoritos from './hooks/useFavoritos.js';
 import { listarCategorias } from './services/CategoriaService';
 import { listarProdutos } from './services/ProdutoService';
 
 export default function App() {
   const navigate = useNavigate();
-  const { favorites, toggleFavorite } = useFavorites();
-  const [categories, setCategories] = useState([]);
-  const [products, setProducts] = useState([]);
+  const { favoritos, alternarFavorito } = useFavoritos();
+  const [categorias, setCategorias] = useState([]);
+  const [produtos, setProdutos] = useState([]);
 
-  const goHome = () => navigate('/');
-  const goCategories = () => navigate('/categorias');
-  const goProducts = (categoryId) => navigate(`/categorias/${categoryId}`);
+  const irParaInicio = () => navigate('/');
+  const irParaCategorias = () => navigate('/categorias');
+  const irParaProdutos = (idCategoria) => navigate(`/categorias/${idCategoria}`);
 
-  const formatPrice = (value) => {
-    if (value == null) return '';
-    const number = typeof value === 'number' ? value : Number(value);
-    if (Number.isNaN(number)) return String(value);
-    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(number);
+  const formatarPreco = (valor) => {
+    if (valor == null) return '';
+    const numero = typeof valor === 'number' ? valor : Number(valor);
+    if (Number.isNaN(numero)) return String(valor);
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(numero);
   };
 
   useEffect(() => {
-    async function loadData() {
+    async function carregarDados() {
       try {
-        const resCats = await listarCategorias();
-        console.log('DEBUG - resCats bruto:', resCats);
-        const cats = (resCats.data || resCats || []).map((c) => ({
-          id: String(c.id),
-          name: c.nome || c.name,
-          description: c.descricao || c.description || '',
-          accentColor: c.accentColor || '#9c5cff',
-        }));
-        console.log('DEBUG - cats mapeados:', cats);
-        setCategories(cats);
-      } catch (error) {
-        console.error('Erro ao carregar categorias', error);
+        const resCategoriasRaw = await listarCategorias();
+        console.log('DEBUG - resCategoriasRaw bruto:', resCategoriasRaw);
+      const categoriasProcessadas = (resCategoriasRaw.data || resCategoriasRaw || []).map((c) => ({
+        id: String(c.id),
+        nome: c.nome || c.name,
+        descricao: c.descricao || c.description || '',
+        corDestaque: c.corDestaque || c.accentColor || '#9c5cff',
+      }));
+        console.log('DEBUG - categoriasProcessadas mapeadas:', categoriasProcessadas);
+        setCategorias(categoriasProcessadas);
+      } catch (erro) {
+        console.error('Erro ao carregar categorias', erro);
       }
 
       try {
-        const resProds = await listarProdutos();
-        const prods = (resProds.data || resProds || []).map((p) => ({
+        const resProdutosRaw = await listarProdutos();
+        const produtosProcessados = (resProdutosRaw.data || resProdutosRaw || []).map((p) => ({
           id: String(p.id),
-          categoryId: String(p.categoria_id ?? p.category_id ?? p.categoryId ?? ''),
-          name: p.nome || p.name,
-          brand: p.marca || p.brand || '',
-          price: formatPrice(p.preco ?? p.price),
-          image: p.imagem || p.image || '',
+          categoriaId: String(p.categoria_id ?? p.category_id ?? p.categoryId ?? ''),
+          nome: p.nome || p.name,
+          marca: p.marca || p.brand || '',
+          preco: formatarPreco(p.preco ?? p.price),
+          imagem: p.imagem || p.image || '',
         }));
-        setProducts(prods);
-      } catch (error) {
-        console.error('Erro ao carregar produtos', error);
+        setProdutos(produtosProcessados);
+      } catch (erro) {
+        console.error('Erro ao carregar produtos', erro);
       }
     }
 
-    loadData();
+    carregarDados();
   }, []);
 
   return (
     <div className="app-shell">
       <Routes>
-        <Route path="/" element={<HomePage onStart={goCategories} />} />
+        <Route path="/" element={<PaginaInicial aoIniciar={irParaCategorias} />} />
         <Route
           path="/categorias"
           element={
-            <CategoriesPage
-              categories={categories}
-              onBack={goHome}
-              onSelectCategory={goProducts}
+            <PaginaCategorias
+              categorias={categorias}
+              aoVoltar={irParaInicio}
+              aoSelecionarCategoria={irParaProdutos}
             />
           }
         />
         <Route
-          path="/categorias/:categoryId"
+          path="/categorias/:categoriaId"
           element={
-            <ProductsPage
-              products={products}
-              categories={categories}
-              favorites={favorites}
-              onToggleFavorite={toggleFavorite}
-              onBack={goCategories}
+            <PaginaProdutos
+              produtos={produtos}
+              categorias={categorias}
+              favoritos={favoritos}
+              aoAlternarFavorito={alternarFavorito}
+              aoVoltar={irParaCategorias}
             />
           }
         />

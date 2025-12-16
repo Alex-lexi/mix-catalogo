@@ -1,11 +1,11 @@
-export default function SearchBar({ value, onChange, placeholder = 'Buscar produtos' }) {
+export default function BarraBusca({ valor, aoMudar, placeholder = 'Buscar produtos' }) {
   return (
     <div className="search-bar">
       <span aria-hidden>🔍</span>
       <input
         type="search"
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
+        value={valor}
+        onChange={(evento) => aoMudar(evento.target.value)}
         placeholder={placeholder}
       />
     </div>
