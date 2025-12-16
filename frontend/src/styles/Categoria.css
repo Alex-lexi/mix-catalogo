@@ -1,0 +1,25 @@
+.category-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+  text-align: left;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.2s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--pink-500);
+}
+
+.category-card__badge {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: #0f0a1f;
+  font-weight: 700;
+}

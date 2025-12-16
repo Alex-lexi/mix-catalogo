@@ -1,3 +1,5 @@
+import '../styles/Categoria.css';
+
 export default function CartaoCategoria({ categoria, aoSelecionarCategoria }) {
   return (
     <button

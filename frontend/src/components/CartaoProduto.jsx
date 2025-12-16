@@ -1,3 +1,5 @@
+import '../styles/Produto.css';
+
 export default function CartaoProduto({
   produto,
   ehFavorito,

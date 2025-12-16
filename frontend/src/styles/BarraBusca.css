@@ -1,0 +1,17 @@
+.barra-busca {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+.barra-busca input {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  width: 100%;
+  outline: none;
+}

@@ -1,3 +1,5 @@
+import '../styles/Cabecalho.css';
+
 export default function Cabecalho({ aoVoltar, titulo, subtitulo }) {
   return (
     <header className="header">
