@@ -17,7 +17,7 @@ export default function HomePage({ onStart }) {
           <div className="hero__card">
             <p className="eyebrow">Logo</p>
             <div className="hero__logo-box">
-              {/* Coloque sua logo em public/logo.png ou substitua pelo formato que preferir */}
+              {/* Colocar logo em public/logo.png ou substituir por outro formato*/}
               <img src="/logo.png" alt="Logo da loja" />
             </div>
             <p>Apresente sua marca de forma elegante e clara.</p>

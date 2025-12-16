@@ -1,16 +1,14 @@
 const db = require('../../config/ConexaoBD');
 
 class Carrinho {
-    // Adiciona item ao carrinho
     static async adicionarItem(usuario_id, produto_id, quantidade) {
-        // Verifica se já existe no carrinho
         const existe = await db.query(
             'SELECT * FROM carrinho WHERE usuario_id = $1 AND produto_id = $2',
             [usuario_id, produto_id]
         );
 
         if (existe.rows.length > 0) {
-            // Atualiza quantidade
+            // Atualizar quantidade
             const query = `
                 UPDATE carrinho 
                 SET quantidade = quantidade + $1 
@@ -20,7 +18,6 @@ class Carrinho {
             const result = await db.query(query, [quantidade, usuario_id, produto_id]);
             return result.rows[0];
         } else {
-            // Insere novo item
             const query = `
                 INSERT INTO carrinho (usuario_id, produto_id, quantidade) 
                 VALUES ($1, $2, $3) 
@@ -31,7 +28,6 @@ class Carrinho {
         }
     }
 
-    // Lista itens do carrinho de um usuário
     static async listarPorUsuario(usuario_id) {
         const query = `
             SELECT c.*, p.nome, p.preco, p.imagem,
@@ -45,7 +41,6 @@ class Carrinho {
         return result.rows;
     }
 
-    // Atualiza quantidade de um item
     static async atualizarQuantidade(id, quantidade) {
         const query = `
             UPDATE carrinho 
@@ -57,21 +52,18 @@ class Carrinho {
         return result.rows[0];
     }
 
-    // Remove item do carrinho
     static async removerItem(id) {
         const query = 'DELETE FROM carrinho WHERE id = $1';
         await db.query(query, [id]);
         return { message: 'Item removido do carrinho' };
     }
 
-    // Limpa todo o carrinho de um usuário
     static async limparCarrinho(usuario_id) {
         const query = 'DELETE FROM carrinho WHERE usuario_id = $1';
         await db.query(query, [usuario_id]);
         return { message: 'Carrinho limpo com sucesso' };
     }
 
-    // Calcula total do carrinho
     static async calcularTotal(usuario_id) {
         const query = `
             SELECT SUM(c.quantidade * p.preco) as total
