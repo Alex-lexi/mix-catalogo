@@ -1,20 +1,21 @@
 import '../styles/CategoriaCard.css';
 
-export default function CategoriaCard({ categoria, aoSelecionarCategoria }) {
+export default function CategoriaCard({ categoria, aoSelecionarCategoria, children }) {
   return (
-    <button
-      className="card category-card"
-      onClick={() => aoSelecionarCategoria(categoria.id)}
-      style={{ borderColor: categoria.corDestaque }}>
-      <div
-        className="category-card__badge"
-        style={{ background: categoria.corDestaque }}>
-        {categoria.nome.slice(0, 1)}
+    <div className="card category-card" style={{ position: 'relative' }}>
+      <button
+        className="card-category-overlay"
+        onClick={() => aoSelecionarCategoria(categoria.id)}
+        tabIndex={-1}
+        aria-label={categoria.nome}
+      />
+      <div className="card-category-menu">
+        {children}
       </div>
       <div>
         <h3>{categoria.nome}</h3>
         <p>{categoria.descricao}</p>
       </div>
-    </button>
+    </div>
   );
 }

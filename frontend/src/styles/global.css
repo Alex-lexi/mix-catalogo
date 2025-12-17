@@ -1,3 +1,99 @@
+/* Menu de opções dos 3 pontinhos */
+.btn-menu {
+  font-size: 22px;
+  padding: 2px 8px;
+}
+.menu-opcoes-categoria {
+  position: absolute;
+  top: 36px;
+  right: 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  min-width: 110px;
+  z-index: 10;
+}
+.menu-opcoes-categoria button {
+  width: 100%;
+  text-align: left;
+  padding: 8px 14px;
+  border-radius: 0;
+  font-size: 15px;
+}
+.menu-opcoes-categoria button:hover {
+  background: var(--pink-500);
+  color: #fff;
+}
+/* Formulário de categoria */
+.form-categoria {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.form-categoria-botoes {
+  display: flex;
+  gap: 8px;
+}
+.input-categoria {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: 15px;
+  outline: none;
+  min-width: 180px;
+  transition: border 0.15s;
+}
+.input-categoria:focus {
+  border-color: var(--pink-500);
+}
+.input-cor {
+  border: none;
+  background: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1.5px var(--border);
+  cursor: pointer;
+}
+.input-cor:focus {
+  box-shadow: 0 0 0 2px var(--pink-500);
+}
+/* Botões discretos para ações de CRUD */
+.btn-discreta {
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  outline: none;
+  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.btn-discreta:hover, .btn-discreta:focus {
+  background: var(--panel);
+  color: var(--pink-500);
+}
+.btn-discreta.btn-danger:hover, .btn-discreta.btn-danger:focus {
+  color: #ff3f3f;
+  background: rgba(255,63,63,0.08);
+}
 :root {
   --pink-500: #ff5db1;
   --pink-600: #ff3fa2;

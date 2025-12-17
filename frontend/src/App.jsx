@@ -24,40 +24,42 @@ export default function App() {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(numero);
   };
 
-  useEffect(() => {
-    async function carregarDados() {
-      try {
-        const resCategoriasRaw = await listarCategorias();
-        console.log('DEBUG - resCategoriasRaw bruto:', resCategoriasRaw);
+  async function carregarCategorias() {
+    try {
+      const resCategoriasRaw = await listarCategorias();
       const categoriasProcessadas = (resCategoriasRaw.data || resCategoriasRaw || []).map((c) => ({
         id: String(c.id),
         nome: c.nome || c.name,
-        descricao: c.descricao || c.description || '',
-        corDestaque: c.corDestaque || c.accentColor || '#9c5cff',
+        descricao: c.descricao || c.description || ''
       }));
-        console.log('DEBUG - categoriasProcessadas mapeadas:', categoriasProcessadas);
-        setCategorias(categoriasProcessadas);
-      } catch (erro) {
-        console.error('Erro ao carregar categorias', erro);
-      }
-
-      try {
-        const resProdutosRaw = await listarProdutos();
-        const produtosProcessados = (resProdutosRaw.data || resProdutosRaw || []).map((p) => ({
-          id: String(p.id),
-          categoriaId: String(p.categoria_id ?? p.category_id ?? p.categoryId ?? ''),
-          nome: p.nome || p.name,
-          marca: p.marca || p.brand || '',
-          preco: formatarPreco(p.preco ?? p.price),
-          imagem: p.imagem || p.image || '',
-        }));
-        setProdutos(produtosProcessados);
-      } catch (erro) {
-        console.error('Erro ao carregar produtos', erro);
-      }
+      setCategorias(categoriasProcessadas);
+    } catch (erro) {
+      console.error('Erro ao carregar categorias', erro);
     }
+  }
 
-    carregarDados();
+  async function carregarProdutos() {
+    try {
+      const resProdutosRaw = await listarProdutos();
+      const produtosProcessados = (resProdutosRaw.data || resProdutosRaw || []).map((p) => ({
+        id: String(p.id),
+        categoriaId: String(p.categoria_id ?? p.category_id ?? p.categoryId ?? ''),
+        nome: p.nome || p.name,
+        marca: p.marca || p.brand || '',
+        preco: formatarPreco(p.preco ?? p.price),
+        imagem: p.imagem || p.image || ''
+      }));
+      // Ordenar produtos por nome
+      produtosProcessados.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+      setProdutos(produtosProcessados);
+    } catch (erro) {
+      console.error('Erro ao carregar produtos', erro);
+    }
+  }
+
+  useEffect(() => {
+    carregarCategorias();
+    carregarProdutos();
   }, []);
 
   return (
@@ -71,6 +73,7 @@ export default function App() {
               categorias={categorias}
               aoVoltar={irParaInicio}
               aoSelecionarCategoria={irParaProdutos}
+              atualizarCategorias={carregarCategorias}
             />
           }
         />
