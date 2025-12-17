@@ -86,6 +86,7 @@ export default function App() {
               favoritos={favoritos}
               aoAlternarFavorito={alternarFavorito}
               aoVoltar={irParaCategorias}
+              atualizarProdutos={carregarProdutos}
             />
           }
         />

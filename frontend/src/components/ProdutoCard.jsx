@@ -4,9 +4,13 @@ export default function ProdutoCard({
   produto,
   ehFavorito,
   aoAlternarFavorito,
+  children
 }) {
   return (
-    <div className="card product-card">
+    <div className="card product-card" style={{ position: 'relative' }}>
+      <div className="card-category-menu">
+        {children}
+      </div>
       <div className="product-card__image">
         <img src={produto.imagem} alt={produto.nome} />
       </div>

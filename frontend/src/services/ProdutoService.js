@@ -1,3 +1,10 @@
+export const editarProduto = (id, dadosProduto) => {
+  return api.put(`/produtos/${id}`, dadosProduto);
+};
+
+export const excluirProduto = (id) => {
+  return api.delete(`/produtos/${id}`);
+};
 import api from './api';
 
 export const listarProdutos = () => {
